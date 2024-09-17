@@ -13,22 +13,13 @@ pipeline {
                 echo 'codereview..'
 		sh script: '/opt/maven/bin/mvn -P metrics pmd:pmd'
            }
-	   post {
-               success {
-		   recordIssues enabledForFailure: true, tool: pmdParser(pattern: '**/target/pmd.xml')
-               }
-           }		
-        }
-        stage('unit-test') {
+  }
+             stage('unit-test') {
 	   steps {
                 echo 'unittest..'
 	        sh script: '/opt/maven/bin/mvn test'
                  }
-	   post {
-               success {
-                   junit 'target/surefire-reports/*.xml'
-               }
-           }			
+	             }			
         }
         stage('package') {
 	   steps {
